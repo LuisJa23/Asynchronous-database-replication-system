@@ -29,7 +29,7 @@ export class DatabaseConnection {
         host: process.env.DB_HOST || 'localhost',
         port: parseInt(process.env.DB_PORT || '3306'),
         username: process.env.DB_USERNAME || 'root',
-        password: process.env.DB_PASSWORD || 'root123',
+        password: process.env.DB_PASSWORD || '1123',
         database: 'database_instance',
         entities: [Instance],
         synchronize: true, // Activado solo en desarrollo para sincronizar el esquema
@@ -65,4 +65,13 @@ export class DatabaseConnection {
       throw error;
     }
   }
+  /**
+ * Crea un nuevo QueryRunner a partir de la instancia actual de DataSource.
+ * @returns QueryRunner
+ */
+public static createQueryRunner(): QueryRunner {
+    return this.getInstance().createQueryRunner();
+  }
+  
 }
+

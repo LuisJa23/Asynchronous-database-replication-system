@@ -15,9 +15,9 @@ const cloudSqlConnector_1 = require("./db/cloudSqlConnector");
     try {
         const pool = yield (0, cloudSqlConnector_1.connectWithConnector)();
         const [rows] = yield pool.query('SELECT NOW() AS now');
-        console.log('Connected! Server time:', rows[0].now);
+        console.log('¡Conexión exitosa! Hora del servidor:', rows[0].now);
     }
     catch (err) {
-        console.error('Connection error:', err);
+        console.error('Error en la conexión:', err);
     }
 }))();

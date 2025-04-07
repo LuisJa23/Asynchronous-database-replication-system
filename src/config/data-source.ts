@@ -7,6 +7,9 @@ import { Instance } from '../models/instance';
  * Clase DatabaseConnection: configura y gestiona la conexión a la base de datos.
  */
 export class DatabaseConnection {
+  static getRepository(entity: typeof Instance) {
+      throw new Error('Method not implemented.');
+  }
   // Instancia singleton de DataSource para evitar múltiples conexiones.
   private static instance: DataSource;
 

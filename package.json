@@ -23,13 +23,17 @@
   "dependencies": {
     "@google-cloud/cloud-sql-connector": "^1.7.0",
     "@google-cloud/sql": "^0.20.1",
+    "body-parser": "^2.2.0",
     "dotenv": "^16.4.7",
     "express": "^5.1.0",
     "google-auth-library": "^9.15.1",
     "googleapis": "^148.0.0",
-    "mysql2": "^3.14.0"
+    "mysql2": "^3.14.0",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.22"
   },
   "devDependencies": {
+    "@types/body-parser": "^1.19.5",
     "@types/express": "^5.0.1",
     "@types/node": "^22.14.0",
     "@types/winston": "^2.4.4",

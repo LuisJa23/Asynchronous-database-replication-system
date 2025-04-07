@@ -15,15 +15,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.connectWithConnector = void 0;
 const promise_1 = __importDefault(require("mysql2/promise"));
 const cloud_sql_connector_1 = require("@google-cloud/cloud-sql-connector");
+// Función para determinar el tipo de IP (pública o privada)
 const getIpType = () => {
     return process.env.PRIVATE_IP === '1' || process.env.PRIVATE_IP === 'true'
         ? 'PRIVATE'
         : 'PUBLIC';
 };
+// Función principal para conectar a Cloud SQL usando el conector
 const connectWithConnector = (...args_1) => __awaiter(void 0, [...args_1], void 0, function* (config = {}) {
     const { INSTANCE_CONNECTION_NAME, DB_USER, DB_PASS, DB_NAME } = process.env;
     if (!INSTANCE_CONNECTION_NAME || !DB_USER || !DB_PASS || !DB_NAME) {
-        throw new Error('Missing required environment variables');
+        throw new Error('Faltan variables de entorno requeridas');
     }
     const connector = new cloud_sql_connector_1.Connector();
     const clientOpts = yield connector.getOptions({

@@ -1,8 +1,12 @@
+//src/routes/routes.ts
 import { Router } from 'express';
 import { createInstance } from '../controllers/instanceController';
 import { ReplicaController } from '../controllers/replicaController';
 import { enableBinlog } from '../controllers/logController';
 import { getOperationStatus } from '../controllers/operationController';
+import { checkInstance } from '../controllers/healthCheckController';
+
+
 
 const router = Router();
 
@@ -33,6 +37,14 @@ router.post('/enable-binlog', async (req, res, next) => {
 router.post('/operations/:projectId/:operationId', async (req, res, next) => {
   try {
     await getOperationStatus(req, res);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get('/health-check/:name', async (req, res, next) => {
+  try {
+    await checkInstance(req, res);
   } catch (error) {
     next(error);
   }

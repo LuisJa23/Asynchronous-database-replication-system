@@ -1,31 +1,38 @@
-// src/app.ts
-import express from 'express';
-import instanceRoutes from './routes/routes';
 import 'dotenv/config';
-import "reflect-metadata"
+import express from 'express';
 import { DatabaseConnection } from './config/data-source';
+import router from './routes/routes';
+import { ReplicaController } from './controllers/replicaController';
+
 const app = express();
 
-// Middleware para parsear JSON
+// Middlewares
 app.use(express.json());
 
-// Rutas
-app.use('/api', instanceRoutes);
+// Routes
+app.use('/api', router);
+
+// Middleware global de manejo de errores
+app.use(ReplicaController.errorHandler);
 
 const PORT = process.env.PORT || 3000;
 
-// Function to initialize the database
-async function initializeDatabase(): Promise<void> {
+async function startServer() {
   try {
     await DatabaseConnection.initialize();
-    console.log('Conexión a la base de datos establecida correctamente.');
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
   } catch (error) {
-    console.error('Error al conectar la base de datos:', error);
+    console.error('Server startup failed:', error);
     process.exit(1);
   }
 }
 
-app.listen(PORT, async () => {
-  console.log(`Servidor corriendo en el puerto ${PORT}`);
-  await initializeDatabase(); // Inicializa la base de datos al arrancar el servidor
+startServer();
+
+// Graceful shutdown
+process.on('SIGINT', async () => {
+  await DatabaseConnection.shutdown();
+  process.exit(0);
 });

@@ -13,4 +13,5 @@ export class Instance {
 
     @Column({ type: "boolean" })
     isOk!: boolean;
+  createdAt: any;
 }

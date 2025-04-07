@@ -10,6 +10,7 @@ export class DatabaseConnection {
   // Instancia singleton de DataSource para evitar múltiples conexiones.
   private static instance: DataSource;
 
+
   // Constructor privado para forzar el uso del método getInstance().
   private constructor() {}
 

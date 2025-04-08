@@ -37,17 +37,27 @@ export const createCloudSQLInstance = async (params: CreateInstanceParams) => {
       requestBody: instanceBody,
     });
 
-    // Guardar el nombre de la instancia en la base de datos
     const newInstance = repository.create({
       name: instanceId,
-      isMain: true, // o false, dependiendo de si es la principal
-      isOk: true     // o false, si esta pendiente de verificacion
+      isMain: true,  // Ajusta esto según la lógica de tu aplicación
+      isOk: true
     });
-    
+
     await repository.save(newInstance);
     return res.data;
   } catch (error) {
     console.error('Error al crear la instancia:', error);
+    throw error;
+  }
+};
+
+// ✅ Nuevo método: Obtener la instancia principal
+export const getMainInstance = async (): Promise<Instance | null> => {
+  try {
+    const repository = DatabaseConnection.getInstance().getRepository(Instance);
+    return await repository.findOne({ where: { isMain: true } });
+  } catch (error) {
+    console.error('Error al obtener la instancia principal:', error);
     throw error;
   }
 };

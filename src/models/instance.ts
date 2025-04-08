@@ -13,5 +13,13 @@ export class Instance {
 
     @Column({ type: "boolean" })
     isOk!: boolean;
+
+    @Column({ type: "varchar", nullable: true }) // <- Aquí se permite que sea null
+    publicIp!: string | null;
+
+    @Column()
+    region!: string;
+
+
   createdAt: any;
 }
